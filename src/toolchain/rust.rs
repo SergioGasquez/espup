@@ -108,7 +108,7 @@ impl XtensaRust {
                 &self.host_triple,
                 self.toolchain_destination.display()
             );
-            cmd!("/bin/bash", "-c", arguments).run()?;
+            cmd!("/usr/bin/env", "bash", "-c", arguments).run()?;
 
             download_file(
                 self.src_dist_url.clone(),
@@ -118,11 +118,11 @@ impl XtensaRust {
             )?;
             info!("{} Installing rust-src for esp toolchain", emoji::WRENCH);
             let arguments = format!(
-                "{}/rust-src-nightly/install.sh --destdir={} --prefix='' --without=rust-docs-json-preview,rust-docs",
+                "{}/rust-src-nightly/install.sh --destdir={} --prefix=''",
                 get_dist_path("rust-src"),
                 self.toolchain_destination.display()
             );
-            cmd!("/bin/bash", "-c", arguments).run()?;
+            cmd!("/usr/bin/env", "bash", "-c", arguments).run()?;
         }
         // Some platfroms like Windows are available in single bundle rust + src, because install
         // script in dist is not available for the plaform. It's sufficient to extract the toolchain
