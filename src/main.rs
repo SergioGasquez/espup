@@ -157,7 +157,10 @@ pub struct EspIdfInstallOpts {
     pub targets: HashSet<Target>,
 }
 /// Installs the Rust for ESP chips environment
-async fn install_esp_idf(_args: EspIdfInstallOpts) -> Result<()> {
+async fn install_esp_idf(args: EspIdfInstallOpts) -> Result<()> {
+    let targets = args.targets;
+    let repo = EspIdfRepo::new(&args.esp_idf_version, false, &targets);
+    repo.install().await?;
     Ok(())
 }
 
