@@ -1,8 +1,12 @@
 use crate::{
+    emoji,
+    logging::initialize_logger,
     targets::{parse_targets, Target},
     toolchain::{espidf::EspIdfRepo, Installable},
+    update::check_for_update,
 };
 use clap::Parser;
+use log::info;
 use miette::Result;
 use std::collections::HashSet;
 
@@ -33,6 +37,9 @@ pub struct InstallOpts {
 
 /// Installs the Rust for ESP chips environment
 pub async fn install(args: InstallOpts) -> Result<()> {
+    initialize_logger(&args.log_level);
+    check_for_update(env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
+    info!("{} Installing ESP-IDF", emoji::DISC);
     let targets = args.targets;
     let repo = EspIdfRepo::new(&args.esp_idf_version, false, &targets);
     repo.install().await?;
