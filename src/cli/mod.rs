@@ -39,6 +39,6 @@ pub enum Rust {
 
 #[derive(Parser)]
 pub enum EspIdf {
-    /// Installs an isntance of ESP-IDF
+    /// Installs an instance of ESP-IDF
     Install(esp_idf::InstallOpts),
 }
