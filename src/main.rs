@@ -46,13 +46,27 @@ struct Cli {
 }
 
 #[derive(Parser)]
-pub enum SubCommand {
+enum SubCommand {
+    #[command(subcommand)]
+    Rust(Rust),
+    #[command(subcommand)]
+    EspIdf(EspIdf),
+}
+
+#[derive(Parser)]
+pub enum Rust {
     /// Installs esp-rs environment
     Install(Box<InstallOpts>),
     /// Uninstalls esp-rs environment
     Uninstall(UninstallOpts),
     /// Updates Xtensa Rust toolchain
     Update(UpdateOpts),
+}
+
+#[derive(Parser)]
+enum EspIdf {
+    EspIdfInstall(EspIdfInstallOpts),
+    // Uninstall,
 }
 
 #[derive(Debug, Parser)]
@@ -119,6 +133,32 @@ pub struct UninstallOpts {
     /// Verbosity level of the logs.
     #[arg(short = 'l', long, default_value = "info", value_parser = ["debug", "info", "warn", "error"])]
     pub log_level: String,
+}
+
+#[derive(Debug, Parser)]
+pub struct EspIdfInstallOpts {
+    /// ESP-IDF version to install. If empty, no esp-idf is installed. Version format:
+    ///
+    /// - `commit:<hash>`: Uses the commit `<hash>` of the `esp-idf` repository.
+    ///
+    /// - `tag:<tag>`: Uses the tag `<tag>` of the `esp-idf` repository.
+    ///
+    /// - `branch:<branch>`: Uses the branch `<branch>` of the `esp-idf` repository.
+    ///
+    /// - `v<major>.<minor>` or `<major>.<minor>`: Uses the tag `v<major>.<minor>` of the `esp-idf` repository.
+    ///
+    /// - `<branch>`: Uses the branch `<branch>` of the `esp-idf` repository.
+    ///
+    /// When using this option, `ldproxy` crate will also be installed.
+    #[arg(short = 'e', long, required = true)]
+    pub esp_idf_version: String,
+    /// Comma or space separated list of targets [esp32,esp32s2,esp32s3,esp32c2,esp32c3,all].
+    #[arg(short = 't', long, default_value = "all", value_parser = parse_targets)]
+    pub targets: HashSet<Target>,
+}
+/// Installs the Rust for ESP chips environment
+async fn install_esp_idf(_args: EspIdfInstallOpts) -> Result<()> {
+    Ok(())
 }
 
 /// Installs the Rust for ESP chips environment
@@ -403,9 +443,15 @@ async fn update(args: UpdateOpts) -> Result<()> {
 #[tokio::main]
 async fn main() -> Result<()> {
     match Cli::parse().subcommand {
-        SubCommand::Install(args) => install(*args).await,
-        SubCommand::Update(args) => update(args).await,
-        SubCommand::Uninstall(args) => uninstall(args).await,
+        SubCommand::Rust(rust) => match rust {
+            Rust::Install(args) => install(*args).await,
+            Rust::Update(args) => update(args).await,
+            Rust::Uninstall(args) => uninstall(args).await,
+        },
+        SubCommand::EspIdf(esp_idf) => match esp_idf {
+            EspIdf::EspIdfInstall(args) => install_esp_idf(args).await,
+            // EspIdf::Uninstall => println!("Uninstall"),
+        },
     }
 }
 
