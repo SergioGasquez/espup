@@ -2,7 +2,7 @@ use crate::{
     emoji,
     logging::initialize_logger,
     targets::{parse_targets, Target},
-    toolchain::{espidf::EspIdfRepo, Installable},
+    toolchain::{esp_idf::EspIdfRepo, Installable},
     update::check_for_update,
 };
 use clap::Parser;
@@ -43,5 +43,6 @@ pub async fn install(args: InstallOpts) -> Result<()> {
     let targets = args.targets;
     let repo = EspIdfRepo::new(&args.esp_idf_version, false, &targets);
     repo.install().await?;
+    // Update config file
     Ok(())
 }

@@ -5,7 +5,7 @@ use crate::{
     emoji,
     error::Error,
     host_triple::HostTriple,
-    toolchain::{download_file, espidf::get_dist_path, get_home_dir},
+    toolchain::{download_file, esp_idf::get_dist_path, get_home_dir},
 };
 use async_trait::async_trait;
 use embuild::cmd;

@@ -56,13 +56,13 @@ pub enum Error {
     #[error(transparent)]
     CmdError(#[from] embuild::cmd::CmdError),
     // Toolchain - ESP-IDF
-    #[diagnostic(code(espup::toolchain::espidf::failed_to_instatiate_cmake))]
+    #[diagnostic(code(espup::toolchain::esp_idf::failed_to_instatiate_cmake))]
     #[error("{} Failed to add CMake to ESP-IDF tools", emoji::ERROR)]
     FailedToInstantiateCmake,
-    #[diagnostic(code(espup::toolchain::espidf::failed_to_create_esp_idf_install_closure))]
+    #[diagnostic(code(espup::toolchain::esp_idf::failed_to_create_esp_idf_install_closure))]
     #[error("{} Failed to create ESP-IDF  install closure", emoji::ERROR)]
     FailedToCreateEspIdfInstallClosure,
-    #[diagnostic(code(espup::toolchain::espidf::failed_to_install_esp_idf))]
+    #[diagnostic(code(espup::toolchain::esp_idf::failed_to_install_esp_idf))]
     #[error("{} Failed to install ESP-IDF", emoji::ERROR)]
     FailedToInstallEspIdf,
     //  Main

@@ -6,7 +6,7 @@ use crate::{
     error::Error,
     host_triple::HostTriple,
     targets::Target,
-    toolchain::{download_file, espidf::get_tool_path},
+    toolchain::{download_file, esp_idf::get_tool_path},
 };
 use async_trait::async_trait;
 use embuild::espidf::EspIdfVersion;

@@ -21,9 +21,9 @@ async fn main() -> Result<()> {
 /// For Windows, we need to check that we are installing all the targets if we are installing esp-idf.
 pub fn check_arguments(
     targets: &HashSet<Target>,
-    espidf_version: &Option<String>,
+    esp_idf_version: &Option<String>,
 ) -> Result<(), Error> {
-    if espidf_version.is_some()
+    if esp_idf_version.is_some()
         && (!targets.contains(&Target::ESP32)
             || !targets.contains(&Target::ESP32C3)
             || !targets.contains(&Target::ESP32S2)

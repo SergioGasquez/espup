@@ -5,7 +5,7 @@ use crate::{
     emoji,
     error::Error,
     host_triple::HostTriple,
-    toolchain::{download_file, espidf::get_tool_path},
+    toolchain::{download_file, esp_idf::get_tool_path},
 };
 use async_trait::async_trait;
 use log::{info, warn};

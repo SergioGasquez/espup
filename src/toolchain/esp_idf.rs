@@ -179,26 +179,26 @@ impl Installable for EspIdfRepo {
             repo_url: Some("https://github.com/espressif/esp-idf".to_string()),
         };
 
-        let espidf_origin = espidf::EspIdfOrigin::Managed(repo.clone());
+        let esp_idf_origin = espidf::EspIdfOrigin::Managed(repo.clone());
         #[cfg(unix)]
-        let espidf = install(espidf_origin).map_err(|_| Error::FailedToInstallEspIdf)?;
+        let esp_idf = install(esp_idf_origin).map_err(|_| Error::FailedToInstallEspIdf)?;
         #[cfg(windows)]
-        install(espidf_origin).map_err(|_| Error::FailedToInstallEspIdf)?;
-        let espidf_dir = get_install_path(repo);
+        install(esp_idf_origin).map_err(|_| Error::FailedToInstallEspIdf)?;
+        let esp_idf_dir = get_install_path(repo);
         #[cfg(windows)]
-        exports.push(format!("$Env:IDF_PATH=\"{}\"", espidf_dir.display()));
+        exports.push(format!("$Env:IDF_PATH=\"{}\"", esp_idf_dir.display()));
         #[cfg(unix)]
-        exports.push(format!("export IDF_PATH={}", espidf_dir.display()));
+        exports.push(format!("export IDF_PATH={}", esp_idf_dir.display()));
         #[cfg(windows)]
-        exports.push(espidf_dir.join("export.ps1").display().to_string());
+        exports.push(esp_idf_dir.join("export.ps1").display().to_string());
         #[cfg(unix)]
-        exports.push(format!("export PATH={:?}", espidf.exported_path));
+        exports.push(format!("export PATH={:?}", esp_idf.exported_path));
         if self.minified {
             info!("{} Minifying ESP-IDF", emoji::INFO);
-            remove_dir_all(espidf_dir.join("docs"))?;
-            remove_dir_all(espidf_dir.join("examples"))?;
-            remove_dir_all(espidf_dir.join("tools").join("esp_app_trace"))?;
-            remove_dir_all(espidf_dir.join("tools").join("test_idf_size"))?;
+            remove_dir_all(esp_idf_dir.join("docs"))?;
+            remove_dir_all(esp_idf_dir.join("examples"))?;
+            remove_dir_all(esp_idf_dir.join("tools").join("esp_app_trace"))?;
+            remove_dir_all(esp_idf_dir.join("tools").join("test_idf_size"))?;
         }
 
         #[cfg(windows)]

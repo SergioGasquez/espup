@@ -7,7 +7,7 @@ use crate::{
     logging::initialize_logger,
     targets::{parse_targets, Target},
     toolchain::{
-        espidf::{get_dist_path, EspIdfRepo},
+        esp_idf::{get_dist_path, EspIdfRepo},
         gcc::Gcc,
         llvm::Llvm,
         rust::{check_rust_installation, Crate, RiscVTarget, XtensaRust},
