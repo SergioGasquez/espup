@@ -109,6 +109,8 @@ impl Installable for EspIdfRepo {
         let cmake_generator = DEFAULT_CMAKE_GENERATOR;
         let mut exports: Vec<String> = Vec::new();
         let targets = self.targets.clone();
+        let minified = self.minified;
+        let install_path = self.install_path.clone();
         // A closure to specify which tools `idf-tools.py` should install.
         let make_tools = move |repo: &git::Repository,
                                version: &anyhow::Result<espidf::EspIdfVersion>|
@@ -126,7 +128,7 @@ impl Installable for EspIdfRepo {
 
             let mut tools = vec![];
             let mut subtools = Vec::new();
-            for target in targets {
+            for target in targets.clone() {
                 let gcc_toolchain_name = get_toolchain_name(&target);
                 subtools.push(gcc_toolchain_name);
 
@@ -148,8 +150,16 @@ impl Installable for EspIdfRepo {
                         .push(espidf::Tools::cmake().map_err(|_| Error::FailedToInstantiateCmake)?);
                 }
             }
-            #[cfg(windows)]
-            subtools.push("openocd-esp32".to_string());
+            if !minified && targets.iter().any(|t| t.xtensa()) {
+                subtools.push("xtensa-esp-elf-gdb".to_string());
+                subtools.push("esp32ulp-elf".to_string());
+            }
+            if !minified && targets.iter().any(|t| t.riscv()) {
+                subtools.push("riscv32-esp-elf-gdb".to_string());
+            }
+            if !minified || cfg!(target_os = "windows") {
+                subtools.push("openocd-esp32".to_string());
+            }
             #[cfg(windows)]
             subtools.push("idf-exe".to_string());
             #[cfg(windows)]
@@ -168,7 +178,7 @@ impl Installable for EspIdfRepo {
 
         let install = |esp_idf_origin: espidf::EspIdfOrigin| -> Result<espidf::EspIdf, Error> {
             espidf::Installer::new(esp_idf_origin)
-                .install_dir(Some(self.install_path.clone()))
+                .install_dir(Some(install_path))
                 .with_tools(make_tools)
                 .install()
                 .map_err(|_| Error::FailedToCreateEspIdfInstallClosure)
