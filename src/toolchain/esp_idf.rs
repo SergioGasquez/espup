@@ -175,15 +175,16 @@ impl Installable for EspIdfRepo {
         };
 
         let repo = espidf::EspIdfRemote {
-            git_ref: espidf::parse_esp_idf_git_ref(&self.version),
+            git_ref: espidf::parse_esp_idf_git_ref(&self.version.clone()),
             repo_url: Some("https://github.com/espressif/esp-idf".to_string()),
         };
 
         let esp_idf_origin = espidf::EspIdfOrigin::Managed(repo.clone());
         #[cfg(unix)]
-        let esp_idf = install(esp_idf_origin).map_err(|_| Error::FailedToInstallEspIdf)?;
+        let esp_idf = install(esp_idf_origin)
+            .map_err(|_| Error::FailedToInstallEspIdf(self.version.clone()))?;
         #[cfg(windows)]
-        install(esp_idf_origin).map_err(|_| Error::FailedToInstallEspIdf)?;
+        install(esp_idf_origin).map_err(|_| Error::FailedToInstallEspIdf(self.version.clone()))?;
         let esp_idf_dir = get_install_path(repo);
         #[cfg(windows)]
         exports.push(format!("$Env:IDF_PATH=\"{}\"", esp_idf_dir.display()));

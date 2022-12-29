@@ -63,8 +63,8 @@ pub enum Error {
     #[error("{} Failed to create ESP-IDF  install closure", emoji::ERROR)]
     FailedToCreateEspIdfInstallClosure,
     #[diagnostic(code(espup::toolchain::esp_idf::failed_to_install_esp_idf))]
-    #[error("{} Failed to install ESP-IDF", emoji::ERROR)]
-    FailedToInstallEspIdf,
+    #[error("{} Failed to install ESP-IDF. Please, manually verify that '{0}' is a proper ESP-IDF version.", emoji::ERROR)]
+    FailedToInstallEspIdf(String),
     //  Main
     #[diagnostic(code(espup::wrong_windows_arguments))]
     #[error(
