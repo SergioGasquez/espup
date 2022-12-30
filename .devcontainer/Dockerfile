@@ -9,7 +9,7 @@ ARG CONTAINER_GROUP=esp
 
 # Ubuntu/Debian
 RUN apt-get update \
-    && apt-get install -y git python3 python3-pip gcc build-essential curl pkg-config libudev-dev\
+    && apt-get install -y git python3 python3-pip gcc build-essential curl pkg-config libudev-dev libusb-1.0-0-dev \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 RUN adduser --disabled-password --gecos "" ${CONTAINER_USER}
 

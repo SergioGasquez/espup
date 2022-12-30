@@ -28,6 +28,7 @@ Before running or installing `espup`, make sure that the following dependencies 
   ```
   - `libudev-dev` is only required when installing `cargo-espflash`.
   - `python3` and `python3-pip` are only required when installing ESP-IDF.
+  - `libusb-1.0-0-dev` is required for `openocd-esp32`
 - Fedora
   ```sh
   sudo dnf -y install git python3 python3-pip perl gcc systemd-devel
