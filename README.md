@@ -114,7 +114,6 @@ Arguments:
 Options:
   -l, --log-level <LOG_LEVEL>  Verbosity level of the logs [default: info] [possible values: debug, info, warn, error]
   -h, --help                   Print help
-  -V, --version                Print version
 ```
 
 ### Install Subcommand
@@ -177,9 +176,6 @@ Options:
 
   -h, --help
           Print help (see a summary with '-h')
-
-  -V, --version
-          Print version
 ```
 
 ### Uninstall Subcommand
@@ -188,10 +184,9 @@ Options:
 Usage: espup uninstall [OPTIONS]
 
 Options:
-  -l, --log-level <LOG_LEVEL>      Verbosity level of the logs [default: info] [possible values: debug, info, warn, error]
-  -a, --name <NAME>                Xtensa Rust toolchain name [default: esp]
-  -h, --help                       Print help
-  -V, --version                    Print version
+  -l, --log-level <LOG_LEVEL>  Verbosity level of the logs [default: info] [possible values: debug, info, warn, error]
+  -a, --name <NAME>            Xtensa Rust toolchain name [default: esp]
+  -h, --help                   Print help
 ```
 
 ### Update Subcommand
@@ -210,8 +205,6 @@ Options:
           Xtensa Rust toolchain version
   -h, --help
           Print help
-  -V, --version
-          Print version
 ```
 
 ## License
