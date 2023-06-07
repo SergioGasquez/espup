@@ -38,7 +38,12 @@ Linux systems also require the following packages:
 cargo install espup
 ```
 
-It's also possible to use [cargo-binstall](https://github.com/cargo-bins/cargo-binstall) or to directly download the pre-compiled [release binaries](https://github.com/esp-rs/espup/releases):
+It's also possible to use [cargo-binstall](https://github.com/cargo-bins/cargo-binstall) or to directly download the pre-compiled [release binaries](https://github.com/esp-rs/espup/releases).
+
+<details>
+
+<summary>Commands to install pre-compiled release binaries </summary>
+
 - Linux aarch64
   ```sh
   curl -L https://github.com/esp-rs/espup/releases/latest/download/espup-aarch64-unknown-linux-gnu -o espup
@@ -64,16 +69,11 @@ It's also possible to use [cargo-binstall](https://github.com/cargo-bins/cargo-b
   Invoke-WebRequest 'https://github.com/esp-rs/espup/releases/latest/download/espup-x86_64-pc-windows-msvc.exe' -OutFile .\espup.exe
   ```
 
-## Quickstart
+</details>
+
+## Installation quickstart
 
 See [Usage](#usage) section for more details.
-
-### Completions
-
-```
-espup completions <SHELL> > <PATH_TO_STORE_COMPLETION>/espup.<SHELL_EXTENSION>
-```
-
 ### Install
 
 ```sh
@@ -86,19 +86,6 @@ espup install
 > **Warning**
 >
 > The generated export file, by default `export-esp`, needs to be sourced in every terminal in Unix systems before building an application. On Windows, environment variables are automatically injected into your system and don't need to be sourced.
-
-
-### Uninstall
-
-```sh
-espup uninstall
-```
-
-### Update
-
-```sh
-espup update
-```
 
 ## Usage
 
