@@ -71,10 +71,9 @@ It's also possible to use [cargo-binstall](https://github.com/cargo-bins/cargo-b
 
 </details>
 
-## Installation quickstart
+## Quickstart
 
 See [Usage](#usage) section for more details.
-### Install
 
 ```sh
 espup install
